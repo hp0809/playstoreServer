@@ -13,38 +13,31 @@ const apps = require('./app-data.js');
 
 
 app.get('/apps', (req, res) => {
-    const {sort, genre} = req.query;
-
+    const {sort, genres} = req.query;
+    let results = apps.filter(apps =>
+                        apps["App"]);
     if(sort){
         if(!['rating', 'app'].includes(sort)) {
             return res.status(400).send('Sort must be one of rating or app');
         }
     }
 
-    if(sort) {
-        apps
-            .sort((a, b) => {
-                return a[sort] > b[sort] ? 1 : a[sort] < b[sort] ? -1 : 0;
-            })
-    }
-
-    if(genre) {
+    if(genres) {
         if(!['Action', 'Puzzle', 'Strategy', 'Casual', 'Arcade', 'Card'].includes(genre)) {
             return res.status(400).send('Genre must be one of action, puzzle, stratedy, casual, arcade, or card')
         }
     }
 
-    if(genre) {
-        apps
+    if(sort) {
+        results
             .sort((a, b) => {
-                return a[genre] > b[genre] ? 1 : a[genre] < b[genre] ? -1 : 0;
+                return a[sort] > b[sort] ? 1 : a[sort] < b[sort] ? -1 : 0;
             })
 
     }
 
-    res.json(apps)
+    res.json(results)
 });
 
-app.listen(8000, () => {
-    console.log('Server started on PORT 8000')
-});
+
+module.exports = app;
