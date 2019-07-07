@@ -21,7 +21,7 @@ describe('GET /apps', () => {
     it('should sort by app title', () => {
         return request(app)
           .get('/apps')
-          .query({sort: 'app'})
+          .query({sort: 'App'})
           .expect(200)
           .expect('Content-Type', /json/)
           .then(res => {
@@ -29,7 +29,25 @@ describe('GET /apps', () => {
             let i = 0;
             let sorted = true;
             while(sorted && i < res.body.length - 1) {
-              sorted = sorted && res.body[i].app < res.body[i + 1].app;
+              sorted = sorted && res.body[i]["App"] < res.body[i + 1]["App"];
+              i++;
+            }
+            expect(sorted).to.be.true;
+          });
+      });
+
+      it('should sort by rating', () => {
+        return request(app)
+          .get('/apps')
+          .query({sort: "Rating"})
+          .expect(200)
+          .expect('Content-Type', /json/)
+          .then(res => {
+            expect(res.body).to.be.an('array');
+            let i = 0;
+            let sorted = true;
+            while(sorted && i < res.body.length - 1) {
+              sorted = sorted && res.body[i]["Rating"] < res.body[i + 1]["Rating"];
               i++;
             }
             expect(sorted).to.be.true;
