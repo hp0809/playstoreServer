@@ -14,13 +14,18 @@ const apps = require('./app-data.js');
 
 app.get('/apps', (req, res) => {
     const {sort, genres} = req.query;
-    let results = apps.filter(Apps =>
-                        Apps["App"]);
+    let results = apps.filter(apps =>
+                        apps["App"]);
+
+    let genreResultsFiltered = results.filter(results => 
+                            results["Genres"] === genres)
+
     if(sort){
         if(!['Rating', 'App'].includes(sort)) {
             return res.status(400).send('Sort must be one of rating or app');
         }
     }
+    
 
     if(genres) {
         if(!['Action', 'Puzzle', 'Strategy', 'Casual', 'Arcade', 'Card'].includes(genres)) {
@@ -28,7 +33,7 @@ app.get('/apps', (req, res) => {
         }
     }
 
-    if(sort) {
+   if(sort) {
         results
             .sort((a, b) => {
                 return a[sort] > b[sort] ? 1 : a[sort] < b[sort] ? -1 : 0;
@@ -36,16 +41,22 @@ app.get('/apps', (req, res) => {
 
     }
 
-    if(genres) {
-        results
+    if(sort) {
+        genreResultsFiltered
             .sort((a, b) => {
-                return a[genres] > b[genres] ? 1 : a[genres] < b[genres] ? -1 : 0;
+                return a[sort] > b[sort] ? 1 : a[sort] < b[sort] ? -1 : 0;
             })
 
     }
-
+    
+   if(genres) {
+       return res.json(genreResultsFiltered);
+   }
+    
     res.json(results)
 });
 
 
 module.exports = app;
+
+

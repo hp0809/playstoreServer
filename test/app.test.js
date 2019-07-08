@@ -36,10 +36,10 @@ describe('GET /apps', () => {
           });
       });
 
-      it('should sort by rating', () => {
+    it('should sort by rating', () => {
         return request(app)
           .get('/apps')
-          .query({sort: "Rating"})
+          .query({sort: 'Rating'})
           .expect(200)
           .expect('Content-Type', /json/)
           .then(res => {

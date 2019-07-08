@@ -2,7 +2,7 @@
   "name": "playstoreServer",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "sever.js",
   "scripts": {
     "start": "node server",
     "debug": "ndb node server",
