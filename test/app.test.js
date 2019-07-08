@@ -18,7 +18,7 @@ describe('GET /apps', () => {
           .expect(400, 'Sort must be one of rating or app');
       });
 
-    it('should sort by app title', () => {
+      it('should sort by app title', () => {
         return request(app)
           .get('/apps')
           .query({sort: 'App'})
@@ -36,7 +36,7 @@ describe('GET /apps', () => {
           });
       });
 
-    it('should sort by rating', () => {
+      it('should sort by rating', () => {
         return request(app)
           .get('/apps')
           .query({sort: 'Rating'})
@@ -53,4 +53,10 @@ describe('GET /apps', () => {
             expect(sorted).to.be.true;
           });
       });
+//GO OVER WITH MENTOR
+      it('should sort by genre', () => {
+        return request(app)
+          .get('/apps')
+          .query({genres: })
+      })
 })
